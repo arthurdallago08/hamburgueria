@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Black Crown Burgers</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#111;color:#fff;}
+header{background:#000;padding:20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;}
+.logo{font-size:24px;font-weight:700;color:#f1c40f;}
+nav a{color:#fff;text-decoration:none;margin:0 15px;}
+nav a:hover{color:#f1c40f;}
+.hero{height:90vh;background:url('https://images.unsplash.com/photo-1550547660-d9450f859349') center/cover;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+.hero h1{font-size:50px;background:rgba(0,0,0,0.7);padding:20px;border-radius:10px;}
+.btn{background:#f1c40f;color:#000;padding:12px 25px;margin-top:15px;border:none;cursor:pointer;border-radius:25px;font-weight:600;}
+section{padding:80px 10%;}
+.section-title{text-align:center;color:#f1c40f;margin-bottom:40px;font-size:35px;}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;}
+.card{background:#1c1c1c;padding:20px;border-radius:15px;text-align:center;}
+.card img{width:100%;border-radius:10px;}
+.price{color:#f1c40f;font-weight:bold;margin:10px 0;}
+.cart-btn{position:fixed;right:20px;bottom:20px;background:#f1c40f;color:#000;padding:15px 20px;border-radius:30px;cursor:pointer;font-weight:bold;}
+.cart-box{position:fixed;right:-400px;top:0;width:350px;height:100vh;background:#222;padding:20px;transition:0.4s;overflow-y:auto;}
+.cart-box.active{right:0;}
+.cart-item{display:flex;justify-content:space-between;margin:10px 0;}
+.total{margin-top:20px;font-weight:bold;}
+footer{background:#000;padding:30px;text-align:center;}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">🍔 Black Crown</div>
+<nav>
+<a href="#menu">Cardápio</a>
+<a href="#about">Sobre</a>
+<a href="#contact">Contato</a>
+</nav>
+</header>
+
+<section class="hero">
+<h1>O sabor que domina Maringá 👑🔥</h1>
+<button class="btn" onclick="document.getElementById('menu').scrollIntoView()">Ver Cardápio</button>
+</section>
+
+<section id="menu">
+<h2 class="section-title">Nosso Cardápio</h2>
+<div class="menu">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd">
+<h3>Black Burger</h3>
+<p>Blend 180g, cheddar duplo e bacon crocante.</p>
+<div class="price">R$ 32,00</div>
+<button class="btn" onclick="addToCart('Black Burger',32)">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1553979459-d2229ba7433a">
+<h3>Monster Bacon</h3>
+<p>200g carne, triplo bacon e barbecue.</p>
+<div class="price">R$ 38,00</div>
+<button class="btn" onclick="addToCart('Monster Bacon',38)">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
+<h3>Classic Smash</h3>
+<p>Smash burger com molho especial.</p>
+<div class="price">R$ 28,00</div>
+<button class="btn" onclick="addToCart('Classic Smash',28)">Adicionar</button>
+</div>
+
+</div>
+</section>
+
+<section id="about">
+<h2 class="section-title">Sobre Nós</h2>
+<p style="text-align:center;max-width:800px;margin:auto;">
+Somos apaixonados por hambúrguer artesanal e qualidade premium.
+</p>
+</section>
+
+<section id="contact">
+<h2 class="section-title">Contato</h2>
+<p style="text-align:center;">📍 Maringá - PR</p>
+<p style="text-align:center;">📞 (44) 99999-9999</p>
+<p style="text-align:center;">
+<a href="https://wa.me/5544999999999" style="color:#f1c40f;">Peça pelo WhatsApp</a>
+</p>
+</section>
+
+<div class="cart-btn" onclick="toggleCart()">
+🛒 Carrinho (<span id="count">0</span>)
+</div>
+
+<div class="cart-box" id="cartBox">
+<h2>Seu Pedido</h2>
+<div id="items"></div>
+<div class="total">Total: R$ <span id="total">0</span></div>
+</div>
+
+<footer>
+© 2026 Black Crown Burgers - Todos os direitos reservados
+</footer>
+
+<script>
+let cart=[]
+function addToCart(name,price){
+cart.push({name,price})
+updateCart()
+}
+function updateCart(){
+let items=document.getElementById("items")
+let total=0
+items.innerHTML=""
+cart.forEach((item,index)=>{
+total+=item.price
+items.innerHTML+=`<div class="cart-item">
+${item.name} - R$ ${item.price}
+<button onclick="removeItem(${index})">X</button>
+</div>`
+})
+document.getElementById("total").innerText=total
+document.getElementById("count").innerText=cart.length
+}
+function removeItem(index){
+cart.splice(index,1)
+updateCart()
+}
+function toggleCart(){
+document.getElementById("cartBox").classList.toggle("active")
+}
+</script>
+
+</body>
+</html>
